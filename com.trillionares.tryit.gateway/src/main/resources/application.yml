@@ -8,8 +8,6 @@ spring:
     name: gateway-service  # 애플리케이션 이름을 'gateway-service'로 설정
   cloud:
     gateway:
-      auth:
-        excluded-paths: /users/signup,/auth/signin
       routes:  # Spring Cloud Gateway의 라우팅 설정
         - id: auth-service           # 라우트 식별자
           uri: lb://auth-service    # 'auth-service'라는 이름으로 로드 밸런싱된 서비스로 라우팅
@@ -66,7 +64,7 @@ eureka:
 service:
   jwt:
     access-expiration: 86400000  # 24시간
-    secret-key: ${SECRET-KEY} # 환경변수에서 가져옴
+    secret-key: ${SECRET_KEY} # 환경변수에서 가져옴
 
 springdoc:
   enable-native-support: true

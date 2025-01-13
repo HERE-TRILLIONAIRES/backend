@@ -21,7 +21,7 @@ spring:
 service:
   jwt:
     access-expiration: 86400000  # 24시간
-    secret-key: ${SECRET-KEY} # 환경변수에서 가져옴
+    secret-key: ${SECRET_KEY} # 환경변수에서 가져옴
 
 server:
   port: 19010

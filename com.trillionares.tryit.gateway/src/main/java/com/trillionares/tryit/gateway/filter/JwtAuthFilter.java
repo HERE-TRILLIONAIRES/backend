@@ -4,7 +4,6 @@ import com.trillionares.tryit.gateway.jwt.JwtUtil;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.http.HttpStatus;
@@ -24,7 +23,7 @@ public class JwtAuthFilter implements GatewayFilter {
     String path = exchange.getRequest().getURI().getPath();
 
     // 인증 제외 경로를 직접 설정
-    List<String> excludedPaths = List.of("/auth/signin", "/users/signup");
+    List<String> excludedPaths = List.of("/auth/signin", "/users/signup", "/users/internals/**");
 
     if (excludedPaths.stream().anyMatch(path::startsWith)) {
       log.info("인증 제외 경로 접근: {}", path);
@@ -62,14 +61,6 @@ public class JwtAuthFilter implements GatewayFilter {
       return exchange.getResponse().setComplete();
     }
   }
-
-  /*
-  // 인증 제외 경로 여부 확인
-  private boolean isExcludedPath(String path) {
-    return excludedPaths.stream().anyMatch(path::startsWith);
-  }
-
-   */
 
   // 사용자 정보 헤더에 추가
   private ServerWebExchange addHeaders(ServerWebExchange exchange, String userName, String userRole) {

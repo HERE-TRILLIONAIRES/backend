@@ -99,6 +99,13 @@ public class UserService {
     return new UserResponseDto(user);
   }
 
+  public UserResponseDto getUserInfo(UUID userId) {
+    User user = userRepository.findByUserIdAndIsDeletedFalse(userId)
+        .orElseThrow(() -> new GlobalException(ErrorCode.USER_NOT_FOUND));
+
+    return new UserResponseDto(user);
+  }
+
 
   private void checkUsername(String username) {
     if (userRepository.existsByUsernameAndIsDeletedFalse(username)) {

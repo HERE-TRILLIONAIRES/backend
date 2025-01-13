@@ -63,7 +63,7 @@ public class UserController {
 
   }
 
-  @GetMapping("/username/{username}")
+  @GetMapping("/internals/username/{username}")
   public BaseResponse<UserAuthorityResponseDto> getUserByUsername(@PathVariable String username,
       @AuthenticationPrincipal CustomUserDetails userDetails) {
     UserAuthorityResponseDto resDto = userService.getUserByUsername(username);
@@ -72,6 +72,13 @@ public class UserController {
 
   @GetMapping("/{userId}")
   public BaseResponse<UserResponseDto> getUser(@PathVariable UUID userId,
+      @AuthenticationPrincipal CustomUserDetails userDetails) {
+    UserResponseDto resDto = userService.getUser(userDetails.getUserId());
+    return BaseResponse.of(200, HttpStatus.OK, "사용자가 조회되었습니다.", resDto);
+  }
+
+  @GetMapping("/internals/{userId}")
+  public BaseResponse<UserResponseDto> getUserInfo(@PathVariable UUID userId,
       @AuthenticationPrincipal CustomUserDetails userDetails) {
     UserResponseDto resDto = userService.getUser(userDetails.getUserId());
     return BaseResponse.of(200, HttpStatus.OK, "사용자가 조회되었습니다.", resDto);

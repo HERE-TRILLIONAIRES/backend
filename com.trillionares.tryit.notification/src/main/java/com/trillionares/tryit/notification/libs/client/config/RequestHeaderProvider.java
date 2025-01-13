@@ -1,4 +1,4 @@
-package com.trillionares.tryit.notification.libs.client.auth;
+package com.trillionares.tryit.notification.libs.client.config;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

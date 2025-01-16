@@ -15,11 +15,11 @@ public class SubmissionEventConsumer {
 
   @KafkaListener(
       topics = "tryit-completed",
-      groupId = "${spring.kafka.consumer.group-id}",
-      containerFactory = "kafkaListenerContainerFactory"
+      groupId = "${spring.kafka.consumer.group-id}"
   )
 
-  public void handleSubmissionSelected(SubmissionSelectedEvent event) {
+  public void handleSubmissionEvent(SubmissionKafkaEvent event) {
+    log.info("Received Kafka message: {}", event);
     //TODO: 예외처리
     notificationService.createNotificationFromSubmissionEvent(event);
   }

@@ -1,10 +1,8 @@
-package com.trillionares.tryit.notification.application.service;
+package com.trillionares.tryit.notification.application.dto.slack;
 
-import com.trillionares.tryit.notification.application.dto.slack.SlackMessage;
 import com.trillionares.tryit.notification.domain.model.Notification;
 import com.trillionares.tryit.notification.infrastructure.persistence.NotificationRepository;
-import com.trillionares.tryit.notification.libs.exception.ErrorCode;
-import com.trillionares.tryit.notification.libs.exception.GlobalException;
+import com.trillionares.tryit.notification.libs.exception.ExceptionConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class SlackNotificationSender {
 
+  private final ExceptionConverter exceptionConverter;
   @Value("${slack.webhook.url}")
   private String webhookUrl;
 
@@ -41,7 +40,7 @@ public class SlackNotificationSender {
       notificationRepository.save(notification);
 
       log.error("Failed to send Slack notification: {}", e.getMessage());
-       throw new GlobalException(ErrorCode.SLACK_NOTIFICATION_FAILED);
+       throw exceptionConverter.convertToBaseException(e);
     }
   }
 }

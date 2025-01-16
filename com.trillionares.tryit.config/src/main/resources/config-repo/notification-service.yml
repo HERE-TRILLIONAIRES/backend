@@ -16,7 +16,6 @@ spring:
         format_sql: true
     show-sql: true
 
-
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
@@ -25,6 +24,8 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: '*'
+        spring.json.type.mapping: submission:com.trillionares.tryit.notification.infrastructure.messaging.event.SubmissionKafkaEvent
+        spring.json.value.default.type: com.trillionares.tryit.notification.infrastructure.messaging.event.SubmissionKafkaEvent
       group-id: notification-service-group
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -33,6 +34,7 @@ spring:
       notification-service: "notification-service-group"
     admin:
       auto-create-topics: false # 테스트 위해서 토픽 자동으로 생성하도록 설정
+
   #  data:
 #    redis:
 #      host: ${redis.notification.host}

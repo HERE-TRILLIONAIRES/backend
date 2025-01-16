@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Getter
 @ToString
-public class SubmissionSelectedEvent {
+public class SubmissionKafkaEvent {
 
   private UUID submissionId;
   private UUID userId;
@@ -17,9 +17,9 @@ public class SubmissionSelectedEvent {
   private UUID messageId;
   private LocalDateTime eventTimestamp;
 
-  protected SubmissionSelectedEvent() {}
+  protected SubmissionKafkaEvent() {}
 
-  public SubmissionSelectedEvent(
+  public SubmissionKafkaEvent(
       UUID submissionId,
       UUID userId,
       UUID recruitmentId,
@@ -35,7 +35,5 @@ public class SubmissionSelectedEvent {
     this.submissionTime = submissionTime;
     this.messageId = messageId;
     this.eventTimestamp = eventTimestamp;
-
-
   }
 }

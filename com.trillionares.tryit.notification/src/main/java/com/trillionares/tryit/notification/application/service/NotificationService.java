@@ -1,13 +1,13 @@
 package com.trillionares.tryit.notification.application.service;
 
 import com.trillionares.tryit.notification.application.dto.NotificationResponse;
+import com.trillionares.tryit.notification.application.dto.slack.SlackNotificationSender;
 import com.trillionares.tryit.notification.domain.model.Notification;
 import com.trillionares.tryit.notification.domain.model.NotificationStatus;
-import com.trillionares.tryit.notification.infrastructure.messaging.event.SubmissionSelectedEvent;
+import com.trillionares.tryit.notification.infrastructure.messaging.event.SubmissionKafkaEvent;
 import com.trillionares.tryit.notification.infrastructure.persistence.NotificationRepository;
 import com.trillionares.tryit.notification.libs.client.auth.AuthServiceClient;
 import com.trillionares.tryit.notification.libs.client.auth.UserResponseDto;
-import com.trillionares.tryit.notification.libs.client.config.RequestHeaderProvider;
 import com.trillionares.tryit.notification.libs.exception.ErrorCode;
 import com.trillionares.tryit.notification.libs.exception.ExceptionConverter;
 import com.trillionares.tryit.notification.libs.exception.GlobalException;
@@ -29,10 +29,8 @@ public class NotificationService {
   private final NotificationRepository notificationRepository;
   private final SlackNotificationSender slackNotificationSender;
   private final AuthServiceClient authServiceClient;
-  private final RequestHeaderProvider requestHeaderProvider;
-
   @Transactional
-  public void createNotificationFromSubmissionEvent(SubmissionSelectedEvent event) {
+  public void createNotificationFromSubmissionEvent(SubmissionKafkaEvent event) {
 
     // 알림 엔티티 저장
     Notification notification = convertEventToNotification(event);
@@ -61,8 +59,7 @@ public class NotificationService {
     return slackId;
   }
 
-
-  private Notification convertEventToNotification(SubmissionSelectedEvent event) {
+  private Notification convertEventToNotification(SubmissionKafkaEvent event) {
 
     return Notification.builder()
         .userId(event.getUserId())

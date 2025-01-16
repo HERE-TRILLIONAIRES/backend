@@ -6,9 +6,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "auth-service" , url = "${openapi.service.url}")
+@FeignClient(name = "auth-service", url = "${openapi.service.url}")
 public interface AuthServiceClient {
 
   @GetMapping("users/internals/{userId}")
-   BaseResponse<UserResponseDto> getUserInfo(@PathVariable UUID userId);
+  BaseResponse<UserResponseDto> getUserInfo(@PathVariable UUID userId);
 }

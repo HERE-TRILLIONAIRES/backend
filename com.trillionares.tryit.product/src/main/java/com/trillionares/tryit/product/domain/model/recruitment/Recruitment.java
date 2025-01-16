@@ -21,6 +21,9 @@ public class Recruitment {
     @Column(name = "recruitment_id")
     private UUID recruitmentId;
 
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
+
     @Column(name = "product_id", nullable = false)
     private UUID productId;
 
